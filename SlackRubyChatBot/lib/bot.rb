@@ -36,7 +36,7 @@ class MyBot < SlackRubyBot::Bot
     end
 
     def fetch_posts(url)
-      response  = HTTParty.get(url)
+      response  = HTTParty.get(url, {headers: {"User-Agent" => "chat-bot v1"}})
       response.parsed_response['data']['children']
     end
 
