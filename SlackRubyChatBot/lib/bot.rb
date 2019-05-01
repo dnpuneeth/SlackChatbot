@@ -7,11 +7,11 @@ class MyBot < SlackRubyBot::Bot
 
   BASE_URL = 'https://www.reddit.com'
   SUBREDDIT_BASE_URL = BASE_URL + '/r/'
-  DEFAULT_LIMIT = 1 # TODO: too many request issues.
+  DEFAULT_LIMIT      = 10 # TODO: too many request issues.
 
   command 'list' do |client, data, _match|
-    input = parse_input(_match)
-    url = build_url(input[:sub_reddit], input[:limit])
+    input      = parse_input(_match)
+    url        = build_url(input[:sub_reddit], input[:limit])
     posts_data = fetch_posts(url)
 
     if posts_data.any?
@@ -36,7 +36,7 @@ class MyBot < SlackRubyBot::Bot
     end
 
     def fetch_posts(url)
-      response  = HTTParty.get(url, {headers: {"User-Agent" => "chat-bot v1"}})
+      response = HTTParty.get(url, { headers: {'User-Agent' => 'chat-bot v1'}})
       response.parsed_response['data']['children']
     end
 
