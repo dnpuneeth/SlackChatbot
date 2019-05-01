@@ -7,7 +7,7 @@ class MyBot < SlackRubyBot::Bot
 
   BASE_URL = 'https://www.reddit.com'
   SUBREDDIT_BASE_URL = BASE_URL + '/r/'
-  DEFAULT_LIMIT      = 10 # TODO: too many request issues.
+  DEFAULT_LIMIT      = 10
 
   command 'list' do |client, data, _match|
     input      = parse_input(_match)
@@ -37,7 +37,7 @@ class MyBot < SlackRubyBot::Bot
 
     def fetch_posts(url)
       response = HTTParty.get(url, { headers: {'User-Agent' => 'chat-bot v1'}})
-      response.parsed_response['data']['children']
+      response.parsed_response['data'].present? ? response.parsed_response['data']['children'] : []
     end
 
     def build_post_list(posts)
